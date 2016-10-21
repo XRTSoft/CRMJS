@@ -44,7 +44,7 @@ var crmjs = (function () {
             },
             getByUrl: function (url, onComplete) {
                 var xhr = new XMLHttpRequest()
-                xhr.open('get', '/api/data/v8.1/adx_sitesettings?$filter=contains(adx_name,%27Services/TipPermits/DefaultPermitAllocation%27)&$select=adx_value', true);
+                xhr.open('get', url, true);
                 xhr.setRequestHeader('OData-MaxVersion', '4.0');
                 xhr.setRequestHeader('OData-Version', '4.0');
                 xhr.setRequestHeader('Prefer', 'odata.include-annotations="*"');
