@@ -61,14 +61,14 @@ var crmjs = (function () {
                 xhr.send();
             },
             filter: function (setName, filter, select, onComplete) {
-                var url = '/api/data/v8.1/' + setName + '/';
+                var url = '/api/data/v8.2/' + setName + '/';
                 url += '?filter=' + filter + '&';
                 url += '$select=' + select;
                 crmjs.webAPI.getByUrl(url, onComplete);
             },
             byId: function (setName, id, select, onComplete) {
-                var url = '/api/data/v8.1/' + setName + '(' + crmjs.webAPI.fixId(id) + ')';
-                url += '$select=' + select;
+                var url = '/api/data/v8.2/' + setName + '(' + crmjs.webAPI.fixId(id) + ')';
+                url += '?$select=' + select;
                 crmjs.webAPI.getByUrl(url, onComplete);
             }
         },
@@ -139,6 +139,14 @@ var crmjs = (function () {
             setVisible: function (fieldName, isDisabled) {
                 var control = crmjs.attr.getControl(fieldName);
                 control.setVisible(isDisabled);
+            },
+            setRequired: function (fieldName, isRequired) {
+                var attr = crmjs.attr.getAttribute(fieldName);
+                if (isRequired) {
+                    attr.setRequiredLevel('required')
+                } else {
+                    attr.setRequiredLevel('none');
+                }
             },
             getLabel: function (fieldName) {
                 var control = crmjs.attr.getControl(fieldName);
