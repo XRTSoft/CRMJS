@@ -1,4 +1,4 @@
-var crmjs = (function () {
+﻿var crmjs = (function () {
     var xrmvar = Xrm;
     var throwErrorOnNotFound = true;
 
@@ -141,7 +141,7 @@ var crmjs = (function () {
                 control.setVisible(isDisabled);
             },
             setRequired: function (fieldName, isRequired) {
-                var attr = crmjs.attr.getAttribute(fieldName);
+                var attr = crmjs.attr.get(fieldName);
                 if (isRequired) {
                     attr.setRequiredLevel('required')
                 } else {
