@@ -35,6 +35,23 @@
         init: function () {
 
         },
+        utils: {
+            openDialog: function (dialogId, logicalName, id) {
+                var url = '/cs/dialog/rundialog.aspx?DialogId=' + dialogId + '&EntityName=' + logicalName + '&ObjectId=' + id;
+                window.open(url);
+            },
+            openDialogByName: function (dialogName, logicalName, id) {
+                crmjs.webAPI.filter(
+                    'workflows',
+                    'name eq \'' + dialogName + '\' and parentworkflowid/workflowid eq null and statecode eq 2',
+                    'name',
+                    function (data) {
+                        var url = '/cs/dialog/rundialog.aspx?DialogId=' + data.workflowid + '&EntityName=' + logicalName + '&ObjectId=' + id;
+                        window.open(url);
+                    }
+                );
+            }
+        },
         webAPI: {
             fixId: function (id) {
                 id = crmjs.isNullOrUndefined(id) ? '' : id;
