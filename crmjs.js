@@ -155,6 +155,12 @@
             setLabel: function (fieldName, label) {
                 var control = crmjs.attr.getControl(fieldName);
                 control.setLabel(label);
+            },
+            addOnChange: function (fieldName, func, doFireNow) {
+                var attr = crmjs.attr.get(fieldName).addOnChange(func);
+                if (doFireNow) {
+                    attr.fireOnChange();
+                }
             }
         },
         grids: {
