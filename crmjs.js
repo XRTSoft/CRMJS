@@ -1,8 +1,6 @@
 ﻿var crmjs = (function () {
     var xrmvar = Xrm;
-    var throwErrorOnNotFound = true;
-
-
+    
     function IsNullOrUndefined(param) {
         return param === null || param === undefined;
     }
@@ -92,14 +90,14 @@
         attr: {
             get: function (fieldName) {
                 var attr = xrmvar.Page.getAttribute(fieldName);
-                if (throwErrorOnNotFound && IsNullOrUndefined(attr)) {
+                if (IsNullOrUndefined(attr)) {
                     throw 'attributes.get - no attribute found with name: ' + fieldName;
                 }
                 return attr;
             },
             getControl: function (fieldName) {
                 var attr = xrmvar.Page.getControl(fieldName);
-                if (throwErrorOnNotFound && IsNullOrUndefined(attr)) {
+                if (IsNullOrUndefined(attr)) {
                     throw 'attributes.getControl - no control found with name: ' + fieldName;
                 }
                 return attr;
@@ -117,11 +115,7 @@
                 try {
                     attr.setValue(value);
                 } catch (ex) {
-                    if (throwErrorOnNotFound) {
-                        throw 'attr.setValue (' + fieldName + ') - Exception: ' + ex.message;
-                    } else {
-                        throw ex;
-                    }
+                    throw 'attr.setValue (' + fieldName + ') - Exception: ' + ex.message;
                 }
             },
             setLookupValue: function (fieldName, lookupId, lookupName, lookupType) {
@@ -134,11 +128,7 @@
                     array[0].entityType = lookupType;
                     attr.setValue(array);
                 } catch (ex) {
-                    if (throwErrorOnNotFound) {
-                        throw 'attr.setLookupValue (' + fieldName + ') - Exception: ' + ex.message;
-                    } else {
-                        throw ex;
-                    }
+                    throw 'attr.setLookupValue (' + fieldName + ') - Exception: ' + ex.message;
                 }
             },
             getDisabled: function (fieldName) {
@@ -227,7 +217,7 @@
             quickForm: {
                 get: function (formName) {
                     var form = xrmvar.Page.ui.quickForm.get(formName);
-                    if (throwErrorOnNotFound && IsNullOrUndefined(form)) {
+                    if (IsNullOrUndefined(form)) {
                         throw 'attributes.get - no quickview form found with name: ' + formName;
                     }
                     return form;
@@ -243,7 +233,7 @@
             tab: {
                 get: function (tabName) {
                     var tab = xrmvar.Page.ui.tabs.get(tabName);
-                    if (throwErrorOnNotFound && IsNullOrUndefined(tab)) {
+                    if (IsNullOrUndefined(tab)) {
                         throw 'form.getTab - no tab found with name: ' + tabName;
                     }
                     return tab;
@@ -281,9 +271,7 @@
                 get: function (sectionName) {
                     var tabs = xrmvar.Page.ui.tabs.getAll();
                     if (tabs === null || tabs.length < 1) {
-                        if (throwErrorOnNotFound) {
-                            throw 'form.getSection - no tabs found on form to use to find section: ' + sectionName;
-                        }
+                        throw 'form.getSection - no tabs found on form to use to find section: ' + sectionName;
                     }
 
                     var section = null;
@@ -293,7 +281,7 @@
                             break;
                         }
                     }
-                    if (throwErrorOnNotFound && IsNullOrUndefined(section)) {
+                    if (IsNullOrUndefined(section)) {
                         throw 'form.getSection - no section found with name: ' + sectionName;
                     }
                     return section;
@@ -319,7 +307,7 @@
         navItems: {
             get: function (navName) {
                 var nav = xrmvar.Page.ui.navigation.items(navName);
-                if (throwErrorOnNotFound && IsNullOrUndefined(nav)) {
+                if (IsNullOrUndefined(nav)) {
                     throw 'navItems.get - no nav item found with name: ' + navName;
                 }
                 return nav;
