@@ -1,6 +1,6 @@
 ﻿var crmjs = (function () {
     var xrmvar = Xrm;
-    
+
     function IsNullOrUndefined(param) {
         return param === null || param === undefined;
     }
@@ -164,7 +164,8 @@
                 control.setLabel(label);
             },
             addOnChange: function (fieldName, func, doFireNow) {
-                var attr = crmjs.attr.get(fieldName).addOnChange(func);
+                var attr = crmjs.attr.get(fieldName);
+                attr.addOnChange(func);
                 if (doFireNow) {
                     attr.fireOnChange();
                 }
@@ -378,6 +379,85 @@
                     };
                 }
                 console.log('debug: ' + msg);
+            }
+        },
+        processes: {
+            getId: function () {
+                var activeProcess = xrmvar.Page.data.process.getActiveProcess();
+                return activeProcess === null ? null : activeProcess.getId();
+            },
+            getName: function () {
+                var activeProcess = xrmvar.Page.data.process.getActiveProcess();
+                return activeProcess === null ? null : activeProcess.getName();
+            },
+            getStages: function () {
+                var activeProcess = xrmvar.Page.data.process.getActiveProcess();
+                return activeProcess === null ? null : activeProcess.getStages();
+            },
+            stage: {
+                active: {
+                    getName: function () {
+                        var stage = xrmvar.Page.data.process.getActiveStage();
+                        return stage.getName();
+                    },
+                    getStatus: function () {
+                        var stage = xrmvar.Page.data.process.getActiveStage();
+                        return stage.getStatus();
+                    },
+                    getId: function () {
+                        var stage = xrmvar.Page.data.process.getActiveStage();
+                        return stage.getId();
+                    },
+                    getCategory: function () {
+                        var stage = xrmvar.Page.data.process.getActiveStage();
+                        return stage.getCategory() === null ?
+                            '' :
+                            stage.getCategory().getValue();
+                    },
+                    getSteps: function () {
+                        var stage = xrmvar.Page.data.process.getActiveStage();
+                        return stage.getSteps();
+                    }
+                },
+                selected: {
+                    getName: function () {
+                        var stage = xrmvar.Page.data.process.getSelectedStage();
+                        return stage.getName();
+                    },
+                    getStatus: function () {
+                        var stage = xrmvar.Page.data.process.getSelectedStage();
+                        return stage.getStatus();
+                    },
+                    getId: function () {
+                        var stage = xrmvar.Page.data.process.getSelectedStage();
+                        return stage.getId();
+                    },
+                    getCategory: function () {
+                        var stage = xrmvar.Page.data.process.getSelectedStage();
+                        return stage.getCategory() === null ?
+                            '' :
+                            stage.getCategory().getValue();
+                    },
+                    getSteps: function () {
+                        var stage = xrmvar.Page.data.process.getSelectedStage();
+                        return stage.getSteps();
+                    }
+                },
+            },
+            addOnChange: function (func) {
+                xrmvar.Page.data.process.addOnStageChange(func);
+            },
+            addOnSelected: function (func) {
+                xrmvar.Page.data.process.addOnStageSelected(func);
+            },
+            addOnStatusChanged: function (func) {
+                xrmvar.Page.data.process.addOnProcessStatusChange(func);
+            },
+            moveNext: function (func) {
+                xrmvar.Page.data.process.moveNext(func);
+            },
+            movePrevious: function (func) {
+                xrmvar.Page.data.process.movePrevious(func);
             }
         }
     }
