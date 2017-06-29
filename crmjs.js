@@ -58,13 +58,13 @@
                 return id;
             },
             getByUrl: function (url, onComplete) {
-                var xhr = new XMLHttpRequest()
+                var xhr = new XMLHttpRequest();
                 xhr.open('get', url, true);
                 xhr.setRequestHeader('OData-MaxVersion', '4.0');
                 xhr.setRequestHeader('OData-Version', '4.0');
                 xhr.setRequestHeader('Prefer', 'odata.include-annotations="*"');
                 xhr.onreadystatechange = function (result) {
-                    if (this.readyState == 4) {
+                    if (this.readyState === 4) {
                         xhr.onreadystatechange = null;
                         if (onComplete !== null && typeof onComplete === 'function') {
                             onComplete(JSON.parse(this.responseText));
@@ -150,7 +150,7 @@
             setRequired: function (fieldName, isRequired) {
                 var attr = crmjs.attr.get(fieldName);
                 if (isRequired) {
-                    attr.setRequiredLevel('required')
+                    attr.setRequiredLevel('required');
                 } else {
                     attr.setRequiredLevel('none');
                 }
@@ -266,7 +266,7 @@
                 setVisible: function (tabName, isVisible) {
                     var tab = crmjs.form.tab.get(tabName);
                     return tab.setVisible(isVisible);
-                },
+                }
             },
             section: {
                 get: function (sectionName) {
@@ -302,7 +302,7 @@
                 setVisible: function (sectionName, isVisible) {
                     var section = crmjs.form.section.get(sectionName);
                     return section.setVisible(isVisible);
-                },
+                }
             }
         },
         navItems: {
@@ -340,7 +340,7 @@
                 xrmvar.Page.data.entity.save('saveandnew');
             }
         },
-        notificatons: {
+        notifications: {
             set: function (msg, level, id) {
                 xrmvar.Page.ui.setFormNotification(msg, level, id);
             },
@@ -354,6 +354,21 @@
             fieldClear: function (fieldName, id) {
                 var control = crmjs.attr.getControl(fieldName);
                 control.clearNotification(id);
+            }
+        },
+        //Previously had a typo - play nice and forward requests to the correct spelling
+        notificatons: {
+            set: function (msg, level, id) {
+                return crmjs.notifications.set(msg, level, id);
+            },
+            clear: function (id) {
+                return crmjs.notifications.clear(id);
+            },
+            fieldSet: function (fieldName, msg, id) {
+                return crmjs.notifications.fieldSet(fieldName, msg, id);
+            },
+            fieldClear: function (fieldName, id) {
+                return crmjs.notifications.fieldClear(fieldName, id);
             }
         },
         iframe: {
@@ -442,7 +457,7 @@
                         var stage = xrmvar.Page.data.process.getSelectedStage();
                         return stage.getSteps();
                     }
-                },
+                }
             },
             addOnChange: function (func) {
                 xrmvar.Page.data.process.addOnStageChange(func);
@@ -460,5 +475,5 @@
                 xrmvar.Page.data.process.movePrevious(func);
             }
         }
-    }
+    };
 })();
